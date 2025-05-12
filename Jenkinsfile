@@ -1,6 +1,3 @@
-
-Run
-Copy code
 pipeline {
     agent any
 
