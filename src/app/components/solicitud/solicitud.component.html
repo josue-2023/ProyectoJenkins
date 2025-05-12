@@ -1,0 +1,194 @@
+<div class="container text-center">
+
+    <div>
+        <h1>Solicitud de Prestamos de equipos</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-4 py-1">
+                <div>
+                <h2>Formulario</h2> 
+                </div>
+            <form [formGroup]="form" (ngSubmit)="agregarPersona()">
+
+                
+                <div class="form-floating mb-3">
+                    <input type="number" formControlName="servicio" class="form-control" id="floatingInput" placeholder="codigo" maxlength="5"
+                    minlength="5" required pattern="[0-9]+">
+                    <label for="floatingInput">Numero de solicitud</label>
+        
+                    <div class="alert alert-danger mt-2" [hidden]="form.controls['servicio'].valid  || form.controls['servicio'].pristine">
+                        <div>El Campo es obligatorio</div>
+                        <div>Ingrese 5 digitos</div>
+                    </div>
+                </div>
+        
+                <div class="form-floating mb-3">
+                    <input type="text" formControlName="cedula" class="form-control" id="floatingInput" placeholder="Cedula" maxlength="10"
+                    minlength="10" required pattern="[0-9]+">
+                    <label for="floatingInput">Cedula: <i class="bi bi-card-heading"></i></label>
+        
+                    <div class="alert alert-danger mt-2" [hidden]="form.controls['cedula'].valid  || form.controls['cedula'].pristine">
+                        <div>El campo es obligatorio</div>
+                        <div>Ingrese 10 digitos</div>
+                    </div>
+                </div>
+        
+        
+                <div class="form-floating mb-3">
+                    <input type="text" formControlName="nombre" class="form-control" id="floatingInput"  placeholder="Nombre">
+                    <label for="floatingInput">Nombre: <i class="bi bi-person-circle"></i></label>
+        
+                    <div class="alert alert-danger mt-2" [hidden]="form.controls['nombre'].valid  || form.controls['nombre'].pristine">
+                        El campo es obligatorio
+                    </div>
+                </div>
+        
+                <div class="form-floating mb-3">
+                    <input type="text" formControlName="apellido" class="form-control" id="floatingInput" placeholder="codigo">
+                    <label for="floatingInput">Apellido:</label>
+        
+                    <div class="alert alert-danger mt-2" [hidden]="form.controls['apellido'].valid  || form.controls['apellido'].pristine">
+                        El campo es obligatorio
+                    </div>
+                </div>
+        
+        
+                <div class="form-floating mb-3">
+                    <input type="date" formControlName="fechaInicio" class="form-control" id="floatingInput" placeholder="Fecha de Entrega">
+                    <label for="floatingInput">fecha de entrega:</label>
+        
+                    <div class="alert alert-danger mt-2" [hidden]="form.controls['fechaInicio'].valid  || form.controls['fechaInicio'].pristine">
+                        El campo es obligatorio
+                    </div>
+                </div>
+        
+                <div class="form-floating mb-3">
+                    <input type="date" formControlName="fechaDevolucion" class="form-control" id="floatingInput" placeholder="Fecha de Devolucion">
+                    <label for="floatingInput">fecha de Devolucion:</label>
+        
+                    <div class="alert alert-danger mt-2" [hidden]="form.controls['fechaDevolucion'].valid  || form.controls['fechaDevolucion'].pristine">
+                        El campo es obligatorio
+                    </div>
+                </div>
+        
+                
+                <div>
+                    <div class="form-floating">
+                        <select class="form-select"  formControlName="equipo" id="floatingSelect">
+                            aria-label="Floating label select example">
+                            @for (elem of listProducto; track elem.id) {
+                            <option value="{{elem.equipo}}">
+                                {{ elem.equipo }}
+                            </option>
+                            }
+                        </select>
+                        <label for="floatingSelect">Equipos:</label>
+                    </div>
+        
+                    
+                </div>
+        
+                <div class="form-floating mb-3" style="margin-top: 10px;">
+                    <input type="number" formControlName="cantidad" class="form-control" id="floatingInput" min="0" max="4" placeholder="Cantidad">
+                    <label for="floatingInput">cantidad:</label>
+        
+                    <div class="alert alert-danger mt-2" [hidden]="form.controls['cantidad'].valid  || form.controls['cantidad'].pristine">
+                        <div>Ingrese la cantidad de equipos </div>
+                        <div>Maximo de equipos 4</div>
+                    </div>
+                </div>
+        
+            @if(mostrarError){
+                <div class="alert alert-danger" role="alert">
+                    {{mensaje}}
+                </div>
+            }    
+        
+            @if(mostrarSuccess){
+                <div class="alert alert-success" role="alert">
+                    {{mensaje}}
+                </div>
+            }
+            
+            
+                <div>
+                    <button [disabled]="form.invalid"  type="submit" class="btn btn-info">Agregar Solicitud <i class="bi bi-floppy"></i></button>
+                </div>
+        
+            </form>
+
+        </div>
+
+        <div class="col-8 my-5">
+            <div class="container text-center">
+                <div>
+                    <h2>Tabla</h2>
+                </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">cedula</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">fecha Entrega</th>
+                        <th scope="col">fecha Devolucion</th>
+                        <th scope="col">Equipo </th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Accion</th>
+                    
+        
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    @for (elem of listSProducto; track elem.cedula) {
+                    <tr>
+        
+                        <td>{{elem.servicio}}</td>
+                        <td>{{elem.cedula}}</td>
+                        <td>{{elem.nombre}}</td>
+                        <td>{{elem.apellido}}</td>
+                        <td>{{elem.fechaInicio}}</td>
+                        <td>{{elem.fechaDevolucion}}</td>
+                        <td>{{elem.equipo}}</td>
+                        <td>{{elem.cantidad}}</td>
+        
+                        <td>
+                            <span class="cursor text-danger offset-2" (click)="eliminarSolicitud(elem.servicio)">
+                                <i class="bi bi-trash"></i>
+                            </span>
+                        </td>
+                        
+                        <!--<span routerLink="/enviar/{{contador}}" class="cursor text-primary offset-2" >
+                            <i class="bi bi-send"></i>
+                        </span>-->
+                    </tr>
+                    
+                    }
+                    
+                </tbody>
+            </table>
+
+        <div>
+            <button  routerLink="/enviar/{{contador}}"   [disabled]="boton" type="button" class="btn btn-info" style=" margin-top: 90px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Enviar Solicitudes 
+                <i class="bi bi-send"></i></button>
+        </div>  
+
+        
+        </div>
+    </div>
+
+    </div>
+
+    
+
+</div>
+
+
+
+<div class="container">
+    
+    
+</div>
