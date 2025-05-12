@@ -1,16 +1,19 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'NodeJS'  // 'NodeJS' es el nombre de la instalación que configuraste
+    }
+
     stages {
-        stage('Install Angular CLI') {
+        stage('Install dependencies') {
             steps {
-                bat 'npm install -g @angular/cli'
+                bat 'npm install'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'npm install'
                 bat 'ng build --configuration production'
             }
         }
