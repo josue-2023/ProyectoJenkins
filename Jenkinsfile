@@ -1,3 +1,6 @@
+
+Run
+Copy code
 pipeline {
     agent any
 
@@ -9,6 +12,12 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 bat 'npm install'
+            }
+        }
+
+        stage('Install Angular CLI') {
+            steps {
+                bat 'npm install -g @angular/cli'
             }
         }
 
