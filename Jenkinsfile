@@ -4,18 +4,18 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'npm install'
-                sh 'ng build --configuration production'
+                bat 'npm install'
+                bat 'ng build --configuration production'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'npm run test -- --watch=false --browsers=ChromeHeadless'
+                bat 'npm run test -- --watch=false --browsers=ChromeHeadless'
             }
         }
 
-          stage('Deploy') {
+        stage('Deploy') {
             steps {
                 echo 'Despliegue completado: los archivos ya están en la carpeta servida por Nginx.'
             }
