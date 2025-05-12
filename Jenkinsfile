@@ -32,7 +32,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Despliegue completado: los archivos ya están en la carpeta servida por Nginx.'
+                bat 'xcopy /E /Y /I dist\\garcia-cortez-hector-t1 C:\\nginx\\html'
+                echo 'Despliegue completado: Archivos copiados a Nginx.'
             }
         }
     }
