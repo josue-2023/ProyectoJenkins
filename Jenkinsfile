@@ -33,7 +33,7 @@ pipeline {
         stage('Deploy') {
             steps {
                  bat '''
-                    xcopy /E /I /Y "dist\\garcia-cortez-hector-t1\\browser\\*" "C:\\nginx-1.27.5\\html\\"
+                    xcopy /E /I /Y "dist\\garcia-cortez-hector-t1\\*" "C:\\nginx-1.27.5\\html\\"
                     '''
                 echo 'Despliegue completado: Archivos copiados a Nginx.'
             }
