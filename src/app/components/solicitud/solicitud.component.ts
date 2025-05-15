@@ -22,16 +22,18 @@ export class SolicitudComponent {
   mensaje!:string;
   mostrarError=false;
   mostrarSuccess=false;
-
   mensajeFecha!:string;
 
 
 
-
+  /**
+   * Muestra un mensaje indicando que se requieren más de 3 solicitudes
+   */
   mostraMensaje(){
     this.mensaje='Ingrese mas de 3 solicitudes';
   }
 
+  /** Lista de productos disponibles */
   listSProducto:solicitudProductos[]=[];
   listProducto:Equipos[]=[
     {id:1, equipo:'tablet'},
@@ -40,7 +42,10 @@ export class SolicitudComponent {
     {id:4, equipo:'Consola'},
   ];
 
-
+  /**
+   * Constructor que inicializa el formulario reactivo
+   * @param fb FormBuilder para crear el formulario
+   */
   constructor(private fb: FormBuilder) {
     
     this.form = this.fb.group({
@@ -55,8 +60,11 @@ export class SolicitudComponent {
     })
   }
 
+  /**
+   * Agrega una nueva solicitud a la lista si no existe ya una con el mismo número de servicio.
+   * Realiza validaciones y muestra mensajes correspondientes.
+   */
   agregarPersona(){
-
     if(this.existeSolicitud(this.form.value.servicio) ){
         this.mensaje="El numero de solicitud ya existe";
         this.error();
@@ -82,17 +90,27 @@ export class SolicitudComponent {
   this.botonH();
   }
 
+    /**
+   * Verifica si ya existe una solicitud con el número de servicio dado
+   * @param servicio número de servicio
+   * @returns true si existe, false si no
+   */
   existeSolicitud(servicio:number):boolean{
     return this.listSProducto.some(solicitud => solicitud.servicio==servicio);
   }
 
 
-
+    /**
+   * Verifica si hay alguna solicitud en la que la fecha de inicio coincida con la fecha de devolución ingresada actualmente
+   * @returns true si existe coincidencia, false si no
+   */
   validacionFecha():boolean{
     return this.listSProducto.some(fecha => fecha.fechaInicio == this.form.value.fechaDevolucion);
   }
 
-
+  /**
+   * Muestra mensaje de error por 4 segundos
+   */
   error(){
     this.mostrarError=true;
 
@@ -101,6 +119,9 @@ export class SolicitudComponent {
     },4000);
   }
 
+   /**
+   * Muestra mensaje de éxito por 3 segundos
+   */
   succes(){
     this.mostrarSuccess=true;
 
@@ -109,6 +130,9 @@ export class SolicitudComponent {
     },3000);
   }
 
+   /**
+   * Habilita o deshabilita el botón según el número de solicitudes
+   */
   botonH(){
     if(this.contador>=1){
       this.boton=false;
@@ -117,7 +141,10 @@ export class SolicitudComponent {
     }
   }
   
-
+  /**
+   * Elimina una solicitud con el número de servicio indicado
+   * @param servicio número de servicio de la solicitud a eliminar
+   */
   eliminarSolicitud(servicio:number){
     let indice = this.listSProducto.findIndex(elemento => elemento.servicio === servicio);
     if (indice !== -1) {  
@@ -126,10 +153,6 @@ export class SolicitudComponent {
     this.contador--;
     this.botonH();
   }
-
-
-
-  
-  
+ 
 
 }
